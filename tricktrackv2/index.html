@@ -219,85 +219,8 @@
 			</div>
 		</div>
 
-		<footer id="footer">Impressum</footer>
+		<!--<footer id="footer">Impressum</footer>-->
 		
 		<script src="js/tricktrack.js"></script>
-		<script>
-		
-		//get issues of different states -> ajax when window load
-		window.addEventListener("load", function(){
-			getIssuesByState("todo");
-			getIssuesByState("in_progress");
-			getIssuesByState("done");
-		});
-			
-		
-		//all lis get draggable attribute ************************** REMOVE THIS AFTER TESTS
-		//var links = document.querySelectorAll('li > a'), el = null;
-		var links = document.querySelectorAll('li'), el = null;
-		for (var i = 0; i < links.length; i++) {
-			el = links[i];
-		  
-			el.setAttribute('draggable', 'true');
-			el.addEventListener('dragstart', function(e){
-				e.dataTransfer.effectAllowed = 'copy'; // only dropEffect='copy' will be dropable
-				e.dataTransfer.setData('Text', this.id); // required otherwise doesn't work
-			});
-		 }
-		  
-		 var bin_progress = document.querySelector('#bin_progress');
-		 var in_progress_list = document.querySelector('#in_progress_list');
-		 var bin_done = document.querySelector('#bin_done');
-		 var done_list = document.querySelector('#done_list');
-		 
-		 bin_done.addEventListener('dragover', function (e) {
-			if (e.preventDefault) e.preventDefault(); // allows us to drop
-			//this.className = 'over';
-			e.dataTransfer.dropEffect = 'copy';
-			return false;
-		  });
-		  
-
-		bin_done.addEventListener('drop', function (e) {
-			if (e.stopPropagation) e.stopPropagation(); // stops the browser from redirecting...why???
-			e.preventDefault();
-			//var el = document.getElementById(e.dataTransfer.getData('Text')+"_li");
-			var el = document.getElementById(e.dataTransfer.getData('Text'));
-			//removes issue from list
-			el.parentNode.removeChild(el);
-
-			done_list.appendChild(el);
-
-			var issue_id = el.id.replace("_li","");
-			//save new state
-			saveIssueState(issue_id, "done");
-			return false;
-		  });
-		  
-		bin_progress.addEventListener('dragover', function (e) {
-			if (e.preventDefault) e.preventDefault(); // allows us to drop
-			//this.className = 'over';
-			e.dataTransfer.dropEffect = 'copy';
-			return false;
-		});
-		  
-
-		bin_progress.addEventListener('drop', function (e) {
-			if (e.stopPropagation) e.stopPropagation(); // stops the browser from redirecting...why???
-			e.preventDefault();
-			//var el = document.getElementById(e.dataTransfer.getData('Text')+"_li");
-			var el = document.getElementById(e.dataTransfer.getData('Text'));
-			//removes issue from list
-			el.parentNode.removeChild(el);
-			
-			in_progress_list.appendChild(el);
-			
-			var issue_id = el.id.replace("_li","");
-			//save new state
-			saveIssueState(issue_id, "in_progress");
-			return false;
-		  });	  
-
-		</script>
 	</body>
 </html>
