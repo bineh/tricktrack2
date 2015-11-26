@@ -1,0 +1,303 @@
+<html>
+	<head>
+		<title>Vanilla Tricktrack</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="css/style.css">
+		<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
+	</head>
+	<body>
+		
+		<nav>
+			<div id="logo">Vanilla Tricktrack</div>
+
+				<input type="text" placeholder="Suchen" size="8" id="search" class="navbar"></input>
+				<button type="submit">Search</button>
+				<button id="add_issue">Add</button>
+
+				<button id="login" class="navbar" type="button">Login</button>
+				<button id="logout" class="navbar" type="button">Logout</button>
+
+		</nav>
+
+		<table id="table">
+			<tr>
+				<th>todo</th>
+				<th>in_progress</th>
+				<th>done</th>
+			</tr>
+			<tr>
+				<td id="todo_list_td">
+					<div id="bin_todo">
+					  <ul id="todo_list">
+							<!--TEST DATA -->
+							<li id="one_li">asdfasdf
+								<!--<a id="one" href="#">-->
+									<!--<div>
+										<div>
+											<span>TT-ID</span><span class="ticketuname">username</span>
+										</div>
+										<div class="issue_title">title goes here</div>
+									</div>	-->
+								<!--</a>-->
+							</li>
+							<!--<li id="two_li"><a href="#" id="two">two</a></li>
+							<li id="three_li"><a href="#" id="three">three</a></li>
+							<li id="four_li"><a href="#" id="four">four</a></li>
+							<li id="five_li"><a href="#" id="five">five</a></li>-->
+					  </ul>
+					</div>
+				</td>
+				<td id="progress_list_td">
+					<div id="bin_progress">
+						<ul id="in_progress_list">
+							<!--<li id="a_li"><a id="a" href="#">a</a></li>
+							<li id="b_li"><a href="#" id="b">b</a></li>-->
+						</ul>
+					</div>
+				</td>
+				<td id="done_list_td"> 
+					<div id="bin_done">
+						<ul id="done_list">
+							<!--<li id="lala_li"><a id="lala" href="#">lala</a></li>-->
+						</ul>
+					</div>
+				</td>
+			</tr>
+		</table>
+
+		<div id="container">
+			
+
+			<div id="loginform" class="form">
+				<div id="loginintro" class="text"></div>
+				<!--<div class="error" id="loginerror">
+					<img src="error.png" class="errorimg"/>
+					<div id="loginerrormsg" class="errormsg"></div>
+				</div>-->
+				<form action="login.php" id="submitlogin">
+					<div class="form-row">
+						<label for="email">Email: </label>
+						<input type="text" name="email" id="emaillogin" class="inputform" required></div>
+					<div class="form-row">
+						<label for="password">Password: </label>
+						<input type="password" name="password" id="passwordlogin" class="inputform" required>
+					</div>
+					<button id="cancellogin" type="button" class="cancel" value="Cancel">Cancel</button>
+					<button id="register" class="navbar" type="button">Register</button>
+					<button id="loginsubmit" class="submit" type="button">Login</button>
+				</form>
+			</div>
+			
+			<!--register form-->
+			<div id="registerform" class="form">
+				<div id="registerintro" class="text">Please register with all your very important personal data!</div>
+				<!--<div class="error" id="registererror">
+					<img src="error.png" class="errorimg"/>
+					<div id="registererrormsg" class="errormsg"></div>
+				</div>-->
+				<form action="register.php" id="submitregister">
+					<div class="form-row">
+						<label for="firstname">Vorname: </label>
+						<input type="text" name="firstname" id="firstname" class="inputform" onblur="validateFirstname()" required>
+						<img id="firstnamepic" alt="picture" class="checkimg"/>
+					</div>
+					<div class="form-row">
+						<label for="lastname">Nachname: </label>
+						<input type="text" name="lastname" id="lastname" class="inputform" onblur="validateLastname()" required>
+						<img id="lastnamepic" alt="picture" class="checkimg"/>
+					</div>
+					<div class="form-row">
+						<label for="username">Username: </label>
+						<input type="text" name="username" id="usernameregister" class="inputform" onblur="validateUsername()" required>
+						<img id="usernamepic" alt="picture" class="checkimg"/>
+					</div>
+					<div class="form-row">
+						<label for="email">Email: </label>
+						<input type="text" name="email" id="emailregister" class="inputform" onblur="validateEmail()" required>
+						<img id="emailpic" alt="picture" class="checkimg"/>
+					</div>
+					<div class="form-row">
+						<label for="password">Passwort: </label>
+						<input type="password" name="password" id="passwordregister" class="inputform" onblur="validatePassword()" required>
+						<img id="passwordimg" alt="picture" class="checkimg"/>
+					<div id="unsecurepas"></div>
+					</div>
+					
+					<div class="form-row">
+						<label for="passwordrepeat">Passwort wiederholen: </label>
+						<input type="password" name="passwordrepeat" id="passwordrepeat" class="inputform"  onblur="validatePasswordRepeat()" required>
+						<img id="errorrepeatimg" alt="picture" class="checkimg"/>
+					</div>			
+					<button id="cancelregister" class="cancel" value="Cancel" type="button">Cancel</button>
+					<button id="registersubmit" class="submit" type="button">Register</button>
+				</form>
+			</div>
+			
+		<!--create new issue-->	
+		  <div id="createissueform" class="form">
+				<div id="issuenintro" class="text"></div>
+				<!--<div class="error" id="loginerror">
+					<img src="error.png" class="errorimg"/>
+					<div id="loginerrormsg" class="errormsg"></div>
+				</div>-->
+				<form>
+					<div class="form-row">
+						<label for="title">Title: </label>
+						<input type="text" name="title" id="issuetitle" class="inputform" required></div>
+					<div class="form-row">
+						<label for="description">Description: </label>
+						<input type="text" name="description" id="description" class="inputform" required>
+					</div>
+					<div class="form-row">
+						<label for="priority">Priority: </label>
+						<select name="priority" id="priority" class="inputform">
+								<option>high</option>
+								<option>medium</option>
+								<option>low</option>
+						</select>
+					</div>					
+					<div class="form-row">
+						<label for="assigned_to">Assign to: </label>
+						<select name="assigned_to" id="assigned_to" class="inputform">
+								<option>names will go here</option>
+								<option>name2</option>
+								<option>name3</option>
+						</select>
+					</div>
+					<div class="form-row">
+						<label for="category">Category: </label>
+						<select name="category" id="category" class="inputform">
+								<option>category1</option>
+								<option>category2</option>
+								<option>category3</option>
+						</select>
+					</div>
+					<button id="cancelcreate" type="button" class="cancel" value="Cancel">Cancel</button>
+					<button id="createissue" class="submit" type="button">Create</button>
+				</form>
+			</div>
+			
+			<!--update issue form-->
+			<div id="updateissueform" class="form">
+				<div id="issuenintro" class="text"></div>
+				<form>
+					<div class="form-row">
+						<label for="title">Title: </label>
+						<span id="title_update"></span>
+					</div>
+					<div class="form-row">
+						<label for="description">Description: </label>
+						<span id="description_update"></span>
+					</div>
+					<div class="form-row">
+						<label for="priority">Priority: </label>
+						<select name="priority" id="priority_update" class="inputform">
+								<option>high</option>
+								<option>medium</option>
+								<option>low</option>
+						</select>
+					</div>					
+					<div class="form-row">
+						<label for="assigned_to">Assign to: </label>
+						<select name="assigned_to" id="assigned_to" class="inputform">
+								<option>names will go here</option>
+								<option>name2</option>
+								<option>name3</option>
+						</select>
+					</div>
+					<div class="form-row">
+						<label for="category">Category: </label>
+						<select name="category" id="category_update" class="inputform">
+								<option>category1</option>
+								<option>category2</option>
+								<option>category3</option>
+						</select>
+					</div>
+					<button id="cancelcreate" type="button" class="cancel" value="Cancel">Cancel</button>
+					<button id="updateissue" class="submit" type="button">Create</button>
+				</form>
+			</div>
+		</div>
+
+		<footer id="footer">Impressum</footer>
+		
+		<script src="js/tricktrack.js"></script>
+		<script>
+		
+		//get issues of different states -> ajax when window load
+		window.addEventListener("load", function(){
+			getIssuesByState("todo");
+			getIssuesByState("in_progress");
+			getIssuesByState("done");
+		});
+			
+		
+		//all lis get draggable attribute ************************** REMOVE THIS AFTER TESTS
+		//var links = document.querySelectorAll('li > a'), el = null;
+		var links = document.querySelectorAll('li'), el = null;
+		for (var i = 0; i < links.length; i++) {
+			el = links[i];
+		  
+			el.setAttribute('draggable', 'true');
+			el.addEventListener('dragstart', function(e){
+				e.dataTransfer.effectAllowed = 'copy'; // only dropEffect='copy' will be dropable
+				e.dataTransfer.setData('Text', this.id); // required otherwise doesn't work
+			});
+		 }
+		  
+		 var bin_progress = document.querySelector('#bin_progress');
+		 var in_progress_list = document.querySelector('#in_progress_list');
+		 var bin_done = document.querySelector('#bin_done');
+		 var done_list = document.querySelector('#done_list');
+		 
+		 bin_done.addEventListener('dragover', function (e) {
+			if (e.preventDefault) e.preventDefault(); // allows us to drop
+			//this.className = 'over';
+			e.dataTransfer.dropEffect = 'copy';
+			return false;
+		  });
+		  
+
+		bin_done.addEventListener('drop', function (e) {
+			if (e.stopPropagation) e.stopPropagation(); // stops the browser from redirecting...why???
+			e.preventDefault();
+			//var el = document.getElementById(e.dataTransfer.getData('Text')+"_li");
+			var el = document.getElementById(e.dataTransfer.getData('Text'));
+			//removes issue from list
+			el.parentNode.removeChild(el);
+
+			done_list.appendChild(el);
+
+			var issue_id = el.id.replace("_li","");
+			//save new state
+			saveIssueState(issue_id, "done");
+			return false;
+		  });
+		  
+		bin_progress.addEventListener('dragover', function (e) {
+			if (e.preventDefault) e.preventDefault(); // allows us to drop
+			//this.className = 'over';
+			e.dataTransfer.dropEffect = 'copy';
+			return false;
+		});
+		  
+
+		bin_progress.addEventListener('drop', function (e) {
+			if (e.stopPropagation) e.stopPropagation(); // stops the browser from redirecting...why???
+			e.preventDefault();
+			//var el = document.getElementById(e.dataTransfer.getData('Text')+"_li");
+			var el = document.getElementById(e.dataTransfer.getData('Text'));
+			//removes issue from list
+			el.parentNode.removeChild(el);
+			
+			in_progress_list.appendChild(el);
+			
+			var issue_id = el.id.replace("_li","");
+			//save new state
+			saveIssueState(issue_id, "in_progress");
+			return false;
+		  });	  
+
+		</script>
+	</body>
+</html>

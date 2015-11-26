@@ -1,0 +1,4 @@
+* Zustände : todo, in_progress, done
+* beim Anlegen: Zustand: todo per default
+* mögliche Zustandsänderungen: todo -> in_progress / done
+							   in_progress -> done
