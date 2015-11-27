@@ -1,21 +1,21 @@
 <?php
 
-$host="localhost";
-$user="root";
-$password="";
-$dbname="tricktrack";
+include('dbhelper.php');
 
-$dbh = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
+$dbh = openDBConnect();
 
 if(isset($_POST['user']) && !empty($_POST['user'])){
 
 	$user = json_decode($_POST['user'], true);
 	
-	echo $user['password'];
-	
-	$sql = "SELECT * FROM users WHERE email = '".$user['email']."' AND password = '".$user['password']."';";
+	//$sql = "SELECT * FROM users WHERE email = '".$user['email']."' AND password = '".$user['password']."';";
+	$sql = "SELECT * FROM users WHERE username = :username AND password = :password";
 
 	$result = $dbh->prepare($sql);
+	
+	$result->bindParam(':username', $user['username']);
+    $result->bindParam(':password', $user['password']);
+    
 	$result->execute();
 
 	$db_user = $result->fetch(PDO::FETCH_OBJ);

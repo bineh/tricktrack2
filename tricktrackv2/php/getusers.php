@@ -3,12 +3,15 @@ include('dbhelper.php');
 
 $dbh = openDBConnect();
 
-$sql = "SELECT username,_id FROM users";
+$sql = "SELECT username, _id FROM users";
+$result = [];
 
-$result = $dbh->prepare($sql);
-$result->execute();
-$db_users = $result->fetch(PDO::FETCH_OBJ); //FETCH ARRAY!!!!!!!!
+$query = $dbh->prepare($sql);
+$query->execute();
 
-//and run through....
+while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+	$result[] = $row;
+}
+echo json_encode($result);
 
 ?>

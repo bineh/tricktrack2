@@ -76,15 +76,15 @@
 				</div>-->
 				<form action="login.php" id="submitlogin">
 					<div class="form-row">
-						<label for="email">Email: </label>
-						<input type="text" name="email" id="emaillogin" class="inputform" required></div>
+						<label for="username">Username: </label>
+						<input type="text" name="username" id="usernamelogin" class="inputform" required></div>
 					<div class="form-row">
 						<label for="password">Password: </label>
 						<input type="password" name="password" id="passwordlogin" class="inputform" required>
 					</div>
 					<button id="cancellogin" type="button" class="cancel" value="Cancel">Cancel</button>
 					<button id="register" class="navbar" type="button">Register</button>
-					<button id="loginsubmit" class="submit" type="button">Login</button>
+					<button id="sendloginform" class="submit" type="button">Login</button>
 				</form>
 			</div>
 			
@@ -129,7 +129,7 @@
 						<img id="errorrepeatimg" alt="picture" class="checkimg"/>
 					</div>			
 					<button id="cancelregister" class="cancel" value="Cancel" type="button">Cancel</button>
-					<button id="registersubmit" class="submit" type="button">Register</button>
+					<button id="registeruser" class="submit" type="button">Register</button>
 				</form>
 			</div>
 			
@@ -159,9 +159,9 @@
 					<div class="form-row">
 						<label for="assigned_to">Assign to: </label>
 						<select name="assigned_to" id="assigned_to" class="inputform">
-								<option>names will go here</option>
+								<!--<option>names will go here</option>
 								<option>name2</option>
-								<option>name3</option>
+								<option>name3</option>-->
 						</select>
 					</div>
 					<div class="form-row">
@@ -181,6 +181,7 @@
 			<div id="updateissueform" class="form">
 				<div id="issuenintro" class="text"></div>
 				<form>
+					<input type="hidden" id="hidden_id"></input>
 					<div class="form-row">
 						<label for="title">Title: </label>
 						<span id="title_update"></span>
@@ -199,7 +200,7 @@
 					</div>					
 					<div class="form-row">
 						<label for="assigned_to">Assign to: </label>
-						<select name="assigned_to" id="assigned_to" class="inputform">
+						<select name="assigned_to" id="assigned_to_update" class="inputform">
 								<option>names will go here</option>
 								<option>name2</option>
 								<option>name3</option>
@@ -214,13 +215,14 @@
 						</select>
 					</div>
 					<button id="cancelcreate" type="button" class="cancel" value="Cancel">Cancel</button>
-					<button id="updateissue" class="submit" type="button">Create</button>
+					<button id="updateissue" class="submit" type="button">Update</button>
 				</form>
 			</div>
 		</div>
 
 		<!--<footer id="footer">Impressum</footer>-->
 		
+		<script src="js/ajax.js"></script>
 		<script src="js/tricktrack.js"></script>
 	</body>
 </html>

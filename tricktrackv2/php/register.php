@@ -7,15 +7,17 @@ if(isset($_POST['user']) && !empty($_POST['user'])){
 
 	$user = json_decode($_POST['user'], true);
 	
-	
-	$emailexists = "SELECT * FROM users WHERE email='".$user['email']."';";
-	$usernameexists = "SELECT * FROM users WHERE username='".$user['username']."';";
-	
+	$emailexists = "SELECT * FROM users WHERE email = :email";
 	$resultemail = $dbh->prepare($emailexists);
-	$resultemail->execute();
+	$resultemail->bindParam(':email', $user['email']);
+	
+	$resultemail->execute();	
 	$db_user_email = $resultemail->fetch(PDO::FETCH_OBJ);
 	
+	$usernameexists = "SELECT * FROM users WHERE username = :username";
 	$resultusername = $dbh->prepare($usernameexists);
+	$resultusername->bindParam(':username', $user['username']);
+	
 	$resultusername->execute();
 	$db_user_name = $resultusername->fetch(PDO::FETCH_OBJ);
 		
@@ -30,16 +32,22 @@ if(isset($_POST['user']) && !empty($_POST['user'])){
 	} else {
 		//user can be inserted
 		$userid = setUserId();
-		$sqlinsert = "INSERT INTO users (_id, username, firstname, lastname, email, password) VALUES ('$userid', '".$user['username']."','".$user['firstname']."', '".$user['lastname']."', '".$user['email']."', '".$user['password']."');";
-		
-		echo "register.php ".$sqlinsert;
-		
+
+		$sqlinsert = "INSERT INTO users (_id, username, firstname, lastname, email, password) VALUES (:userid, :username, :firstname, :lastname, :email, :password)";
 		$result = $dbh->prepare($sqlinsert);
+		
+		$result->bindParam(':userid', $userid);
+		$result->bindParam(':username', $user['username']);
+		$result->bindParam(':firstname', $user['firstname']);
+		$result->bindParam(':lastname', $user['lastname']);
+		$result->bindParam(':email', $user['email']);
+		$result->bindParam(':password', $user['password']);	
+
 		$result->execute();
-		//$db_insert = $result->fetch(PDO::FETCH_OBJ);
+
 		$response = 1;
 	}
-	//echo json_encode($response);	
+	echo json_encode($response);	
 	
 }
 ?>
