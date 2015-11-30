@@ -4,15 +4,16 @@
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="css/style.css">
 		<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
+		<link  href="http://fonts.googleapis.com/css?family=Reenie+Beanie:regular" rel="stylesheet" type="text/css">
 	</head>
 	<body>
 		
 		<nav>
 			<div id="logo">Vanilla Tricktrack</div>
 
-				<input type="text" placeholder="Suchen" size="8" id="search" class="navbar"></input>
-				<button type="submit">Search</button>
-				<button id="add_issue">Add</button>
+				<!--<input type="text" placeholder="Suchen" size="8" id="search" class="navbar"></input>
+				<button type="submit">Search</button>-->
+				<button id="add_issue">New Issue</button>
 
 				<button id="login" class="navbar" type="button">Login</button>
 				<button id="logout" class="navbar" type="button">Logout</button>
@@ -21,16 +22,16 @@
 
 		<table id="table">
 			<tr>
-				<th>todo</th>
-				<th>in_progress</th>
-				<th>done</th>
+				<th><span id="num_todo" class="number"></span>Todo<hr class="th_line"></th>
+				<th><span id="num_in_progress" class="number"></span>In Progress<hr class="th_line"></th>
+				<th><span id="num_done" class="number"></span>Done<hr class="th_line"></th>
 			</tr>
 			<tr>
 				<td id="todo_list_td">
 					<div id="bin_todo">
 					  <ul id="todo_list">
 							<!--TEST DATA -->
-							<li id="one_li">asdfasdf
+							<!--<li id="one_li">asdfasdf-->
 								<!--<a id="one" href="#">-->
 									<!--<div>
 										<div>
@@ -39,26 +40,19 @@
 										<div class="issue_title">title goes here</div>
 									</div>	-->
 								<!--</a>-->
-							</li>
-							<!--<li id="two_li"><a href="#" id="two">two</a></li>
-							<li id="three_li"><a href="#" id="three">three</a></li>
-							<li id="four_li"><a href="#" id="four">four</a></li>
-							<li id="five_li"><a href="#" id="five">five</a></li>-->
+							<!--</li>-->
 					  </ul>
 					</div>
 				</td>
 				<td id="progress_list_td">
 					<div id="bin_progress">
 						<ul id="in_progress_list">
-							<!--<li id="a_li"><a id="a" href="#">a</a></li>
-							<li id="b_li"><a href="#" id="b">b</a></li>-->
 						</ul>
 					</div>
 				</td>
 				<td id="done_list_td"> 
 					<div id="bin_done">
 						<ul id="done_list">
-							<!--<li id="lala_li"><a id="lala" href="#">lala</a></li>-->
 						</ul>
 					</div>
 				</td>
@@ -159,9 +153,6 @@
 					<div class="form-row">
 						<label for="assigned_to">Assign to: </label>
 						<select name="assigned_to" id="assigned_to" class="inputform">
-								<!--<option>names will go here</option>
-								<option>name2</option>
-								<option>name3</option>-->
 						</select>
 					</div>
 					<div class="form-row">
@@ -182,15 +173,15 @@
 				<div id="issuenintro" class="text"></div>
 				<form>
 					<input type="hidden" id="hidden_id"></input>
-					<div class="form-row">
+					<div class="form-row priority">
 						<label for="title">Title: </label>
 						<span id="title_update"></span>
 					</div>
-					<div class="form-row">
+					<div class="form-row priority">
 						<label for="description">Description: </label>
 						<span id="description_update"></span>
 					</div>
-					<div class="form-row">
+					<div class="form-row priority">
 						<label for="priority">Priority: </label>
 						<select name="priority" id="priority_update" class="inputform">
 								<option>high</option>
@@ -198,15 +189,12 @@
 								<option>low</option>
 						</select>
 					</div>					
-					<div class="form-row">
+					<div class="form-row priority">
 						<label for="assigned_to">Assign to: </label>
 						<select name="assigned_to" id="assigned_to_update" class="inputform">
-								<option>names will go here</option>
-								<option>name2</option>
-								<option>name3</option>
 						</select>
 					</div>
-					<div class="form-row">
+					<div class="form-row priority">
 						<label for="category">Category: </label>
 						<select name="category" id="category_update" class="inputform">
 								<option>category1</option>

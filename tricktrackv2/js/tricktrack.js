@@ -24,6 +24,12 @@ for (var i = 0; i < cancelbuttons.length; i++) {
     cancelbuttons[i].addEventListener("click", cancelform);
 }
 
+if(localStorage.getItem("username") != null){
+	document.getElementById("login").style.display = "none";
+	document.getElementById("logout").style.display = "inline";	
+}
+
+
 //drag and drop
 var bin_progress = document.querySelector('#bin_progress');
 var in_progress_list = document.querySelector('#in_progress_list');
@@ -48,6 +54,7 @@ bin_done.addEventListener('drop', function (e) {
 	var issue_id = el.id.replace("_li","");
 	//save new state
 	saveIssueState(issue_id, "done");
+	updateItemsCount("done", "in_progress");
 	return false;
 });
 		  
@@ -68,6 +75,7 @@ bin_progress.addEventListener('drop', function (e) {
 	var issue_id = el.id.replace("_li","");
 	//save new state
 	saveIssueState(issue_id, "in_progress");
+	updateItemsCount("in_progress", "todo");
 	return false;
 });	
 
@@ -96,4 +104,16 @@ function cancelform(){
 
 function logout(){
 	localStorage.clear();
+	document.getElementById("login").style.display = "inline";
+	document.getElementById("logout").style.display = "none";	
+}
+
+function updateItemsCount(newstatus, oldstatus) {
+	var num = document.getElementById("num_"+newstatus).innerHTML;
+	var num2 = parseInt(num)+1;
+	document.getElementById("num_"+newstatus).innerHTML = num2;
+	
+	var numold = document.getElementById("num_"+oldstatus).innerHTML;
+	var numold2 = parseInt(numold)-1;
+	document.getElementById("num_"+oldstatus).innerHTML = numold2;	
 }

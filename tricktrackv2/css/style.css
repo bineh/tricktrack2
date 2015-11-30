@@ -8,20 +8,23 @@ body {
 }
 
 #logo {
-	font-style:italic;
-	text-shadow: 0px 0px 2px #333, 0px 0px 3px #333;
-	font-size: 30pt;
-	color: #ffb366;
+	font-family: "Reenie Beanie";
+	font-weight: bold;
+	text-shadow: 0px 0px 2px #333, 0px 0px 2px #333;
+	font-size: 35pt;
+	color: #ccf2ff;
 	float: left;
 	display: inline;
-	width:30%
+	width:30%;
+	padding-left:20px;
 }
 nav {
-	background-color: #ffffcc;
-	position: absolute; 
+	background-color: #0086b3;
+	position: absolute;
+	top: 0px;
 	right: 0;
 	width: 100%;
-	height: 50px;
+	//height: 50px;
 }
 
 ul > li {
@@ -36,11 +39,6 @@ a {
 	text-decoration: none;
 }
 
-#login {
-	position: absolute; 
-	right: 10px;
-
-}
 #search {
 	margin-left: 80px;
 	border-radius: 5px;
@@ -67,7 +65,8 @@ footer {
 	border: 1px solid #D2D2D7;
 	border-radius: 4px;
 	padding: 5px 5px;
-	margin-top: 20px
+	margin-top: 20px;
+	z-index: 10;
 }
 
 #container {
@@ -101,6 +100,19 @@ input{
 	border-radius: 4px;
 }
 
+.form-row:nth-child(even) .high {
+	background-color: #f9d2d2;
+	border-radius: 4px;
+}
+
+.form-row:nth-child(even) .medium {
+	background-color: #fafad1;
+	border-radius: 4px;
+}
+.form-row:nth-child(even) .low {
+	background-color: #c2f0c2;
+	border-radius: 4px;
+}
 .form-row label{
 	max-width: 150px;
 	width: 100%;
@@ -123,21 +135,37 @@ input:invalid { box-shadow: none; }
 }
 
 button {
-	background-color: #6699ff;
+	background: #00cc45;
+	background-image: linear-gradient(to bottom, #00cc45, #004d1a);
 	color: #FFFFFF;
 	cursor: pointer;
-	border-radius: 4px;
-	padding: 4px 12px;
+	border-radius: 7px;
+	padding: 4px 8px;
 	border-width: 0px;
 	margin-top: 10px;
-	border: solid 1px #20538D;
-	 clear: both;
+	//border: solid 1px #20538D;
+	font-weight: bold;
+	clear: both;
 }
 
 button:hover { background-color: #248F8F; }
 button#reset:hover { background-color: #248F8F; }
 button#submit { float: right; }
 button.submit { float: right; }
+
+#login, #logout {
+	position: absolute; 
+	right: 10px;
+}
+
+#logout {
+	display: none;
+}
+
+#add_issue{
+	margin-left:150px;
+	margin-top:15px;
+}
 
 
 #table {
@@ -163,16 +191,37 @@ table {
 	display:table;
 	position: relative;
 	top:100px;
-	width:70%;
+	width:90%;
     border-collapse: collapse;
+    margin: 0px auto;
 }
 
 table, th, td {
-   border: 1px solid black;
+   //border: 1px solid black;
+}
+
+.th_line {
+	color: red;
+	border: 0;
+	height: 2px;
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));	
 }
 
 td {
-	width: 33%;
+    vertical-align: top;
+    /*needed if no issue is in column!*/
+    width: 33%;
+}
+th {
+	padding: 15px;
+	font-family: "Reenie Beanie";
+	font-size: 25px;
+}
+
+.number {
+	margin-right:5px;
+	font-family: "Reenie Beanie";
+	font-size: 25px;	
 }
 
 /*li > a {
@@ -189,23 +238,61 @@ td {
 #bin_progress li, #bin_done li, #bin_todo li  {
   text-decoration: none;
   color: #000;
-  margin: 10px;
-  width: 150px;
-  border: 3px dashed #999;
-  background: #eee;
+  margin: 20px;
+  width: 200px;
+  height: 100px;
+  //background: #fcfce8;
   padding: 10px;
   display: block;
+  -moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
+  -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+  box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+  -moz-transition:-moz-transform .15s linear;
+  -o-transition:-o-transform .15s linear;
+  -webkit-transition:-webkit-transform .15s linear;
+}
+
+ul li {
+  -webkit-transform:rotate(-4deg);
+  -o-transform:rotate(-4deg);
+  -moz-transform:rotate(-4deg);
+}
+
+ul li:nth-child(even) {
+  -o-transform:rotate(2deg);
+  -webkit-transform:rotate(2deg);
+  -moz-transform:rotate(2deg);
+  position:relative;
+  top:5px;
+}
+ul li:nth-child(3n) {
+  -o-transform:rotate(-1deg);
+  -webkit-transform:rotate(-1deg);
+  -moz-transform:rotate(-1deg);
+  position:relative;
+  top:-5px;
+}
+
+
+#bin_progress li:hover, #bin_done li:hover, #bin_todo li:hover  {
+  transform: scale(1.15);
+	box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
+	z-index:5;
 }
 /*TEST:...................................*/
 #bin, #bin_progress, #bin_done {
   //height: 250px;
   //width: 166px;
   //float: left;
-  border: 5px solid #000;
+  border: 1px solid #e5ffe5;
   position: relative;
   margin-top: 0;
   cursor:pointer;
 }
+
+.high {background: #f9d2d2;}
+.medium {background: #fafad1;}
+.low {background: #c2f0c2;}
 
 /*TICKETS*/
 
@@ -217,3 +304,4 @@ td {
 .issue_title {
     margin: 0 auto;
 }
+
