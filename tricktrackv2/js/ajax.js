@@ -281,8 +281,11 @@ function openNewIssueForm() {
 			for (var i = 0; i < forms.length; i++) {
 				forms[i].style.display = "none";
 			}
-
+			
+			document.getElementById("updateissueform").style.display = "none";
+			
 			document.getElementById("container").style.display = "block";
+
 
 			var assign_to = document.getElementById("assigned_to");
 			
