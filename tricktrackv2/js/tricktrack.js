@@ -9,7 +9,6 @@ window.addEventListener("load", function(){
 document.getElementById("login").addEventListener("click", function(){openForm("loginform")});
 document.getElementById("logout").addEventListener("click", logout);
 document.getElementById("register").addEventListener("click", function(){openForm("registerform")});
-//document.getElementById("add_issue").addEventListener("click", function(){openForm("createissueform")});
 document.getElementById("add_issue").addEventListener("click", openNewIssueForm);
 
 document.getElementById("sendloginform").addEventListener("click", login);	
@@ -26,7 +25,8 @@ for (var i = 0; i < cancelbuttons.length; i++) {
 
 if(localStorage.getItem("username") != null){
 	document.getElementById("login").style.display = "none";
-	document.getElementById("logout").style.display = "inline";	
+	document.getElementById("logout").style.display = "inline";
+	document.getElementById("add_issue").style.display = "inline";
 }
 
 
@@ -86,10 +86,11 @@ function openForm(formId){
 	for (var i = 0; i < forms.length; i++) {
 		forms[i].style.display = "none";
 	}
+	document.getElementById("updateissueform").style.display = "none";
 
 	document.getElementById("container").style.display = "block";
 	document.getElementById(formId).style.display = "block";
-
+	
 	//document.getElementById("footer").style.backgroundColor = "rgba(0, 0, 0, 0.5)";
 }
 
@@ -105,7 +106,8 @@ function cancelform(){
 function logout(){
 	localStorage.clear();
 	document.getElementById("login").style.display = "inline";
-	document.getElementById("logout").style.display = "none";	
+	document.getElementById("logout").style.display = "none";
+	document.getElementById("add_issue").style.display = "none";
 }
 
 function updateItemsCount(newstatus, oldstatus) {

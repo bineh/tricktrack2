@@ -21,6 +21,7 @@ function login() {
 				document.getElementById("container").style.display = "none";
 				document.getElementById("login").style.display = "none";
 				document.getElementById("logout").style.display = "inline";
+				document.getElementById("add_issue").style.display = "inline";
 			}
 		}
 	}
@@ -57,6 +58,7 @@ function registerUser(){
 					document.getElementById("container").style.display = "none";	
 					document.getElementById("login").style.display = "none";
 					document.getElementById("logout").style.display = "inline";
+					document.getElementById("add_issue").style.display = "inline";
 					break;
 				default:
 					alert("something went wrong: "+xmlhttp.responseText);	
@@ -153,6 +155,14 @@ function showIssueDetails(issue_id){
 		if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
 				//alert(xmlhttp.responseText);			
 			var issue = JSON.parse(xmlhttp.responseText);
+			
+			//var el = document.getElementById("updateissueform");
+			
+			//el.style.display = "block";
+			//alert(el.style.display);
+			//document.getElementById("updateissueform").style.transform = "scale(3.15)";
+			
+			
 			openForm("updateissueform");
 			document.getElementById("hidden_id").value = issue_id;
 			document.getElementById("title_update").innerHTML = issue.title;
@@ -178,6 +188,10 @@ function showIssueDetails(issue_id){
 			document.getElementById("priority_update").selectedIndex = indexPrio;
 			var indexCat = categoryArray.indexOf(issue.category);
 			document.getElementById("category_update").selectedIndex = indexCat;
+			
+
+			document.getElementById("updateissueform").className = "form updateform_"+issue.priority;
+
 		}
 	}	
 }
@@ -204,7 +218,8 @@ function getIssuesByState(state){
 				for (var i = 0; i < result.length; i++){
 						
 					var li = document.createElement("li");
-					var div = document.createElement("div");
+					var outerdiv = document.createElement("div");
+					var spanid = document.createElement("span");
 					var divtitle = document.createElement("div");
 					var a = document.createElement("a");
 					var textnode = document.createTextNode(result[i]._id);
@@ -216,18 +231,23 @@ function getIssuesByState(state){
 					var span = document.createElement("span");
 					
 					li.setAttribute("class", result[i].priority);
+					divtitle.setAttribute("class", "issue_title");
 						
 					span.setAttribute("class", "ticket_uname");
 					a.setAttribute("onclick", "showIssueDetails('"+result[i]._id+"')");
+					
+					outerdiv.setAttribute("class", "issue_outerdiv");
 						
 					divtitle.appendChild(texttitle);
 					span.appendChild(textuname);
 					a.appendChild(textnode);
-					div.appendChild(a);
+					spanid.appendChild(a);
 					//div.appendChild(span);
-					li.appendChild(div);
-					li.appendChild(divtitle);
-					li.appendChild(span);
+					li.appendChild(outerdiv);
+					outerdiv.appendChild(spanid);
+					outerdiv.appendChild(span);
+					outerdiv.appendChild(divtitle);
+					
 					list.appendChild(li);
 					
 					if (state !== "done"){
