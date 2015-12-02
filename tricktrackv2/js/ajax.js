@@ -5,8 +5,6 @@ function login() {
 		
 	var pwhash = CryptoJS.MD5(password).toString();
 
-	localStorage.setItem("username",username);
-
 	xmlhttp.open("POST", "php/login.php", true);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
@@ -14,9 +12,15 @@ function login() {
 	xmlhttp.onreadystatechange = function(){
 
 		if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+			var user = JSON.parse(xmlhttp.responseText);
 			if (xmlhttp.responseText == -1){
 				alert("Something went wrong while login user! Please register first");
 			} else {
+				localStorage.setItem("username",user.username);
+				localStorage.setItem("isAdmin", user.isAdmin);
+				if (user.isAdmin === "true"){
+					document.getElementById("admin").style.display = "inline";
+				}
 				document.getElementById("loginform").style.display = "none";
 				document.getElementById("container").style.display = "none";
 				document.getElementById("login").style.display = "none";
@@ -54,6 +58,8 @@ function registerUser(){
 					alert("registrierung fehlgeschlagen: email exists");
 					break;
 				case '1':
+					localStorage.setItem("username", username);
+					//set new registered user per default to false
 					document.getElementById("registerform").style.display = "none";
 					document.getElementById("container").style.display = "none";	
 					document.getElementById("login").style.display = "none";
@@ -75,8 +81,6 @@ function createIssue(){
 		category = document.getElementById("category").value,
 		reporter = localStorage.getItem("username"),
 		xmlhttp =  new XMLHttpRequest();
-		
-		alert("assigned_to: "+assigned_to);
 		
 	xmlhttp.open("POST", "php/createissue.php", true);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -138,7 +142,7 @@ function saveIssueState(issue_id, newstate){
 				//alert("update erfolgreich");
 			}
 		}
-	}	
+	}
 }
 
 function showIssueDetails(issue_id){
@@ -153,16 +157,9 @@ function showIssueDetails(issue_id){
 	xmlhttp.send("issue_id="+issue_id);
 	xmlhttp.onreadystatechange = function(){
 		if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-				//alert(xmlhttp.responseText);			
+			//alert(xmlhttp.responseText);			
 			var issue = JSON.parse(xmlhttp.responseText);
-			
-			//var el = document.getElementById("updateissueform");
-			
-			//el.style.display = "block";
-			//alert(el.style.display);
-			//document.getElementById("updateissueform").style.transform = "scale(3.15)";
-			
-			
+
 			openForm("updateissueform");
 			document.getElementById("hidden_id").value = issue_id;
 			document.getElementById("title_update").innerHTML = issue.title;
@@ -188,7 +185,13 @@ function showIssueDetails(issue_id){
 			document.getElementById("priority_update").selectedIndex = indexPrio;
 			var indexCat = categoryArray.indexOf(issue.category);
 			document.getElementById("category_update").selectedIndex = indexCat;
-			
+
+			if (issue.state === "done") {
+				document.getElementById("deleteissue").setAttribute("onclick", "deleteIssue('"+issue_id+"')");
+				document.getElementById("deleteissue").style.display = "inline";
+			} else {
+				document.getElementById("deleteissue").style.display = "none";
+			}
 
 			document.getElementById("updateissueform").className = "form updateform_"+issue.priority;
 
@@ -252,6 +255,9 @@ function getIssuesByState(state){
 					
 					if (state !== "done"){
 						li.setAttribute('draggable', 'true');
+					} else {
+						 //spanid.style.text-decoration="line-through";
+						 spanid.setAttribute("class", "line_through");
 					}
 					a.setAttribute('href', '#');
 					li.addEventListener('dragstart', function(e){
@@ -281,11 +287,9 @@ function openNewIssueForm() {
 			for (var i = 0; i < forms.length; i++) {
 				forms[i].style.display = "none";
 			}
-			
 			document.getElementById("updateissueform").style.display = "none";
-			
-			document.getElementById("container").style.display = "block";
 
+			document.getElementById("container").style.display = "block";
 
 			var assign_to = document.getElementById("assigned_to");
 			
@@ -304,6 +308,15 @@ function openNewIssueForm() {
 			
 			document.getElementById("createissueform").style.display = "block";
 		}
+	}
+}
+
+function deleteIssue(issue_id){
+	var deleteIssue = confirm('Willst du diese Task wirklich löschen?');
+	if (deleteIssue) {
+		saveIssueState(issue_id, "deleted");
+		cancelform("updateissueform");
+		location.reload();
 	}
 }
 

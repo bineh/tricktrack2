@@ -1,0 +1,55 @@
+<html>
+	<head>
+		<title>Vanilla Tricktrack</title>
+		<meta charset="utf-8">
+		<link rel="icon" href="../img/icon.png" type="image/x-icon">
+		<link rel="stylesheet" href="../css/style.css">
+		<link  href="http://fonts.googleapis.com/css?family=Reenie+Beanie:regular" rel="stylesheet" type="text/css">
+	</head>
+<body>
+	<b>as an admin you can:</b><br>
+	
+	* <button type="button" id="dropissues">drop all issues</button><br>
+	* delete user -> get list of users here (checkbox?)<br>
+	* drop users
+	
+	<script>
+
+		window.addEventListener("load", checkAdmin);			
+		
+		function checkAdmin(){
+			var isAdmin = localStorage.getItem("isAdmin");
+
+			if(isAdmin == "false"){
+				window.location = "../index.html";
+			}
+		}
+		
+		document.getElementById("dropissues").addEventListener("click", dropIssueTable);
+		
+		function dropIssueTable(){
+			var dialog = confirm("Willst du wirklich alle Issues löschen?");
+
+			if (dialog == true){
+				var xmlhttp =  new XMLHttpRequest();
+
+				xmlhttp.open("GET", "../php/dropissuetable.php", true);
+				xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+				xmlhttp.send();
+				console.log("sdsdsd");
+				xmlhttp.onreadystatechange = function(){
+
+					if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+						if(xmlhttp.responseText === true){
+							alert("Issues dropped successfully");
+						} else {
+							alert("ERROR: Something went wrong while dropping issues!");
+						}
+					}
+				}
+			}
+		}
+	</script>
+</body>
+</html>

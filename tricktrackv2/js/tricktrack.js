@@ -3,6 +3,10 @@ window.addEventListener("load", function(){
 	getIssuesByState("todo");
 	getIssuesByState("in_progress");
 	getIssuesByState("done");
+	var isAdmin = localStorage.getItem("isAdmin");
+	if(isAdmin === "true"){
+		document.getElementById("admin").style.display = "inline";
+	}	
 });
 
 //buttons
@@ -16,6 +20,10 @@ document.getElementById("registeruser").addEventListener("click", registerUser);
 
 document.getElementById("createissue").addEventListener("click", createIssue);
 document.getElementById("updateissue").addEventListener("click", updateIssue);
+
+document.getElementById("admin").onclick = function () {
+        location.href = "admin/admin.html";
+};
 
 
 var cancelbuttons = document.getElementsByClassName("cancel");
@@ -91,6 +99,8 @@ function openForm(formId){
 	document.getElementById("container").style.display = "block";
 	document.getElementById(formId).style.display = "block";
 	
+	document.getElementById("usernamelogin").setAttribute("autofocus", "autofocus");	
+	
 	//document.getElementById("footer").style.backgroundColor = "rgba(0, 0, 0, 0.5)";
 }
 
@@ -108,6 +118,7 @@ function logout(){
 	document.getElementById("login").style.display = "inline";
 	document.getElementById("logout").style.display = "none";
 	document.getElementById("add_issue").style.display = "none";
+	document.getElementById("admin").style.display = "none";
 }
 
 function updateItemsCount(newstatus, oldstatus) {

@@ -27,7 +27,7 @@ while ($row = $queryusers->fetch(PDO::FETCH_ASSOC)) {
 
 if ($db_issue) {
 	$response = array('title' => $db_issue->title, 'description' => $db_issue->description,
-	'priority' => $db_issue->priority, 'assigned_to' => $db_issue->assigned_to,'category' => $db_issue->category, 'users' => $users);
+	'priority' => $db_issue->priority, 'assigned_to' => $db_issue->assigned_to,'category' => $db_issue->category,'state' => $db_issue->status, 'users' => $users);
 }
 echo json_encode($response);
 

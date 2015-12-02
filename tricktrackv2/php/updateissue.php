@@ -3,7 +3,7 @@ include('dbhelper.php');
 
 $dbh = openDBConnect();
 
-//issue only existis when update issue form is called
+//issue only exists when update issue form is called
 $issue = json_decode($_POST['issue'], true);
 
 
