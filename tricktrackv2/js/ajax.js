@@ -3,7 +3,10 @@ function login() {
 	password = document.getElementById("passwordlogin").value
 	var xmlhttp =  new XMLHttpRequest();
 		
-	var pwhash = CryptoJS.MD5(password).toString();
+	var pwhash;
+	if (password.trim() != ""){
+		pwhash = CryptoJS.MD5(password).toString();
+	} 
 
 	xmlhttp.open("POST", "php/login.php", true);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -12,9 +15,11 @@ function login() {
 	xmlhttp.onreadystatechange = function(){
 
 		if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-			var user = JSON.parse(xmlhttp.responseText);
-			if (xmlhttp.responseText == -1){
-				alert("Something went wrong while login user! Please register first");
+			var user = xmlhttp.responseText;
+			if (user === "-1"){
+				alert("Something went wrong while login user! Please fill out username and password field");
+			} else if (user === "true") {
+				alert("Something went wrong while login user! Wrong password?");
 			} else {
 				localStorage.setItem("username",user.username);
 				localStorage.setItem("isAdmin", user.isAdmin);
@@ -26,7 +31,7 @@ function login() {
 				document.getElementById("login").style.display = "none";
 				document.getElementById("logout").style.display = "inline";
 				document.getElementById("add_issue").style.display = "inline";
-			}
+			} 
 		}
 	}
 }
@@ -88,13 +93,19 @@ function createIssue(){
 	xmlhttp.send("&issue="+JSON.stringify({title:title,description:description,priority:priority,assigned_to:assigned_to, category:category, reporter:reporter}));
 	xmlhttp.onreadystatechange = function(){
 		if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-
-			if(xmlhttp.responseText === "-1"){
-				alert("issue anlegen fehlgeschlagen");
+			var response = xmlhttp.responseText;
+			alert(response);
+			if(response !== "true"){
+				if (response === "-1") {
+					alert("Issue ist leer und kann nicht angelegt werden!");
+				} else if (response === "-2"){
+					alert("Bitte gib einen Titel an!");
+				} else {
+					alert("Beim Einfügen in die Datenbank ist etwas fehlgeschlagen");
+				}
 			} else {
 				document.getElementById("createissueform").style.display = "none";
 				document.getElementById("container").style.display = "none";
-				alert(xmlhttp.responseText);
 				location.reload(); 
 			}
 		}
@@ -114,20 +125,20 @@ function updateIssue(){
 	xmlhttp.send("&issue="+JSON.stringify({issue_id:issue_id,priority:priority,assigned_to:assigned_to, category:category}));
 	xmlhttp.onreadystatechange = function(){
 		if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-
-			if(xmlhttp.responseText === "-1"){
-				alert("issue update fehlgeschlagen");
+			var response = xmlhttp.responseText;
+			if(response !== "true"){
+				alert("Issueupdate fehlgeschlagen!");
 			} else {
 				document.getElementById("updateissueform").style.display = "none";
 				document.getElementById("container").style.display = "none";
-				location.reload(); 
+				location.reload();
 			}
 		}
 	}
 }
 
 function saveIssueState(issue_id, newstate){
-	var xmlhttp =  new XMLHttpRequest();
+	var xmlhttp = new XMLHttpRequest();
 		
 	xmlhttp.open("POST", "php/updateissue.php", true);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -135,11 +146,9 @@ function saveIssueState(issue_id, newstate){
 	xmlhttp.send("issue_id="+issue_id+"&newstate="+newstate);
 	xmlhttp.onreadystatechange = function(){
 		if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-
-			if(xmlhttp.responseText === "-1"){
-				alert("issue upate fehlgeschlagen");
-			} else {
-				//alert("update erfolgreich");
+			var response = xmlhttp.responseText;
+			if(response !== "true"){
+				alert("Issue update fehlgeschlagen!");
 			}
 		}
 	}
