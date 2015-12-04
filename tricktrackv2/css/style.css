@@ -286,9 +286,9 @@ ul li:nth-child(3n) {
   cursor:pointer;
 }
 
-.high {background: #f9d2d2;}
-.medium {background: #fafad1;}
-.low {background: #c2f0c2;}
+.high {background: #f3a5a5;}
+.medium {background: #f7f7ba;}
+.low {background: #adebad;}
 
 /*TICKETS*/
 .issue_outerdiv {

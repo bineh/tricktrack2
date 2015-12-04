@@ -21,14 +21,14 @@ if(isset($_POST['user']) && !empty($_POST['user'])){
 	$resultusername->execute();
 	$db_user_name = $resultusername->fetch(PDO::FETCH_OBJ);
 		
-	$response = -1;
+	$res = -1;
 	
 	if ($db_user_name) {
 		//user with userame exists
-		$response = -2;
+		$res = -2;
 	} else if ($db_user_email) {
 		//user with email exists
-		$response = -3;
+		$res = -3;
 	} else {
 		//user can be inserted
 		$userid = setUserId();
@@ -43,11 +43,9 @@ if(isset($_POST['user']) && !empty($_POST['user'])){
 		$result->bindParam(':email', $user['email']);
 		$result->bindParam(':password', $user['password']);	
 
-		$result->execute();
-
-		$response = 1;
+		$res = $result->execute();
 	}
-	echo json_encode($response);	
+	echo json_encode($res);	
 	
 }
 ?>

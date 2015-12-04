@@ -63,6 +63,7 @@ bin_done.addEventListener('drop', function (e) {
 	//save new state
 	saveIssueState(issue_id, "done");
 	updateItemsCount("done", "in_progress");
+	el.firstElementChild.firstElementChild.setAttribute("class", "line_through");
 	return false;
 });
 		  

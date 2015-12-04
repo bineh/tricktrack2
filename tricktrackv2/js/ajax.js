@@ -1,9 +1,9 @@
 function login() {
 	var username = document.getElementById("usernamelogin").value,
-	password = document.getElementById("passwordlogin").value
-	var xmlhttp =  new XMLHttpRequest();
-		
-	var pwhash;
+		password = document.getElementById("passwordlogin").value,
+		xmlhttp =  new XMLHttpRequest(),
+		pwhash;
+	
 	if (password.trim() != ""){
 		pwhash = CryptoJS.MD5(password).toString();
 	} 
@@ -16,13 +16,16 @@ function login() {
 
 		if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
 			var user = xmlhttp.responseText;
+
 			if (user === "-1"){
-				alert("Something went wrong while login user! Please fill out username and password field");
+				alert("Something went wrong while login user! Please enter username and password field");
 			} else if (user === "true") {
 				alert("Something went wrong while login user! Wrong password?");
 			} else {
-				localStorage.setItem("username",user.username);
-				localStorage.setItem("isAdmin", user.isAdmin);
+				var userobj = JSON.parse(xmlhttp.responseText);
+
+				localStorage.setItem("username",userobj.username);
+				localStorage.setItem("isAdmin", userobj.isAdmin);
 				if (user.isAdmin === "true"){
 					document.getElementById("admin").style.display = "inline";
 				}
@@ -62,7 +65,7 @@ function registerUser(){
 				case '-3':
 					alert("registrierung fehlgeschlagen: email exists");
 					break;
-				case '1':
+				case 'true':
 					localStorage.setItem("username", username);
 					//set new registered user per default to false
 					document.getElementById("registerform").style.display = "none";
@@ -72,7 +75,7 @@ function registerUser(){
 					document.getElementById("add_issue").style.display = "inline";
 					break;
 				default:
-					alert("something went wrong: "+xmlhttp.responseText);	
+					alert("Something went wrong while registering user: "+xmlhttp.responseText);	
 			}
 		}
 	}
@@ -155,9 +158,9 @@ function saveIssueState(issue_id, newstate){
 }
 
 function showIssueDetails(issue_id){
-	var priorityArray = ["high", "medium", "low"];
-	var categoryArray = ["category1", "category2", "category3"];
-	var xmlhttp =  new XMLHttpRequest();
+	var priorityArray = ["high", "medium", "low"],
+		categoryArray = ["category1", "category2", "category3"],
+		xmlhttp =  new XMLHttpRequest();
 	
 		
 	xmlhttp.open("POST", "php/getissuebyid.php", true);
@@ -165,8 +168,7 @@ function showIssueDetails(issue_id){
 
 	xmlhttp.send("issue_id="+issue_id);
 	xmlhttp.onreadystatechange = function(){
-		if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-			//alert(xmlhttp.responseText);			
+		if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {		
 			var issue = JSON.parse(xmlhttp.responseText);
 
 			openForm("updateissueform");
@@ -203,7 +205,6 @@ function showIssueDetails(issue_id){
 			}
 
 			document.getElementById("updateissueform").className = "form updateform_"+issue.priority;
-
 		}
 	}	
 }
@@ -246,15 +247,15 @@ function getIssuesByState(state){
 					divtitle.setAttribute("class", "issue_title");
 						
 					span.setAttribute("class", "ticket_uname");
-					a.setAttribute("onclick", "showIssueDetails('"+result[i]._id+"')");
-					
+					if(localStorage.getItem("username") !== null){
+						a.setAttribute("onclick", "showIssueDetails('"+result[i]._id+"')");
+					}
 					outerdiv.setAttribute("class", "issue_outerdiv");
 						
 					divtitle.appendChild(texttitle);
 					span.appendChild(textuname);
 					a.appendChild(textnode);
 					spanid.appendChild(a);
-					//div.appendChild(span);
 					li.appendChild(outerdiv);
 					outerdiv.appendChild(spanid);
 					outerdiv.appendChild(span);
@@ -262,10 +263,9 @@ function getIssuesByState(state){
 					
 					list.appendChild(li);
 					
-					if (state !== "done"){
+					if ((state !== "done") && (localStorage.getItem("username") !== null)){
 						li.setAttribute('draggable', 'true');
-					} else {
-						 //spanid.style.text-decoration="line-through";
+					} else if (state === "done"){
 						 spanid.setAttribute("class", "line_through");
 					}
 					a.setAttribute('href', '#');
