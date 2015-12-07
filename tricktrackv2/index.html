@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Vanilla Tricktrack</title>
+		<title>TodoList</title>
 		<meta charset="utf-8">
 		<link rel="icon" href="img/favicon.png" type="image/x-icon">
 		<link rel="stylesheet" href="css/style.css">
@@ -10,11 +10,14 @@
 	<body>
 		
 		<nav>
-			<div id="logo">Vanilla Tricktrack</div>
+			<div id="logo">TodoList</div>
 
 				<!--<input type="text" placeholder="Suchen" size="8" id="search" class="navbar"></input>
 				<button type="submit">Search</button>-->
-				<button id="add_issue">New Issue</button>
+				<button id="add_issue">
+					<img src="img/create2.png" id ="add_issue_image">
+					<span id="add_issue_text">New Issue</span>
+				</button>
 				
 				<button id="admin" class="navbar" type="button">Admin</button>
 				<button id="login" class="navbar" type="button">Login</button>
@@ -23,11 +26,13 @@
 		</nav>
 
 		<table id="table">
-			<tr>
-				<th><span id="num_todo" class="number"></span>Todo<hr class="th_line"></th>
-				<th><span id="num_in_progress" class="number"></span>In Progress<hr class="th_line"></th>
-				<th><span id="num_done" class="number"></span>Done<hr class="th_line"></th>
-			</tr>
+			<thead>
+				<tr>
+					<th><span id="num_todo" class="number"></span><span class="table_title">Todo</span><hr class="th_line"></th>
+					<th><span id="num_in_progress" class="number"></span><span class="table_title">In Progress</span><hr class="th_line"></th>
+					<th><span id="num_done" class="number"></span><span class="table_title">Done</span><hr class="th_line"></th>
+				</tr>
+			</thead>
 			<tr>
 				<td id="todo_list_td">
 					<div id="bin_todo">
@@ -43,6 +48,7 @@
 									</div>	-->
 								<!--</a>-->
 							<!--</li>-->
+							<!--TEST DATA END-->
 					  </ul>
 					</div>
 				</td>

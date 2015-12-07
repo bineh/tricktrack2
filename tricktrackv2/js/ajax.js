@@ -34,12 +34,12 @@ function login() {
 				document.getElementById("login").style.display = "none";
 				document.getElementById("logout").style.display = "inline";
 				document.getElementById("add_issue").style.display = "inline";
+				location.reload();
 			} 
 		}
 	}
 }
 
-//@TODO: work on response codes...................
 function registerUser(){
 	var firstname = document.getElementById("firstname").value,
 		lastname = document.getElementById("lastname").value,

@@ -120,6 +120,7 @@ function logout(){
 	document.getElementById("logout").style.display = "none";
 	document.getElementById("add_issue").style.display = "none";
 	document.getElementById("admin").style.display = "none";
+	location.reload();
 }
 
 function updateItemsCount(newstatus, oldstatus) {

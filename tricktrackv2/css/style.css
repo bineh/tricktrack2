@@ -32,7 +32,7 @@ ul > li {
 }
 
 .navbar {
-	margin-top: 15px;
+	//margin-top: 15px;
 }
 
 a {
@@ -155,6 +155,11 @@ button#reset:hover { background-color: #248F8F; }
 button#submit { float: right; }
 button.submit { float: right; }
 
+#add_issue_image {
+	width:16px;
+	height:16px;		
+}
+
 #login, #logout {
 	position: absolute; 
 	right: 10px;
@@ -171,7 +176,6 @@ button.submit { float: right; }
 
 #add_issue{
 	margin-left:150px;
-	margin-top:15px;
 	display:none;
 }
 
@@ -234,8 +238,9 @@ th {
 #bin_progress li, #bin_done li, #bin_todo li  {
   text-decoration: none;
   color: #000;
-  margin: 20px;
-  width: 200px;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 200px;
   height: 100px;
   //background: #fcfce8;
   padding: 10px;
@@ -292,7 +297,7 @@ ul li:nth-child(3n) {
 
 /*TICKETS*/
 .issue_outerdiv {
-	width:200px;
+	//width:200px;
 }
 
 .ticket_uname {
@@ -356,4 +361,84 @@ ul li:nth-child(3n) {
 
 .updateform_low {
 	background-color: #C2F0C2;
+}
+
+@media screen and (max-width:850px) {	
+	
+	#logo {font-size: 27pt;}
+	#add_issue {margin-left:50px;}
+	
+	button {padding:2px;}
+	
+	#bin_progress li, #bin_done li, #bin_todo li  {
+		width: 100%;
+		max-width: 100px;
+	}
+	a {
+		font-size: 15px;
+	}
+	.issue_title {
+		font-size: 15px;
+	}
+	/*admin button only use on big screen size*/
+	#admin {
+		 visibility: hidden;
+	}
+
+}
+@media screen and (max-width:630px) {	
+	#bin_progress li, #bin_done li, #bin_todo li  {
+		margin-left: -20;
+	}
+}
+@media screen and (max-width:500px) {
+
+	#logo {font-size: 23pt;}
+	
+	#add_issue_image {
+		width:16px;
+		height:16px;		
+	}
+	
+	#add_issue {
+		padding:6px;
+	}
+	#add_issue_text{display:none;}
+
+	button {
+		padding:4px;
+		font-size:19px;
+	}
+	table {
+		width: 100%;
+		top:50px;
+	}
+
+	.number, .table_title{font-size: 15px;}
+
+	#bin_progress li, #bin_done li, #bin_todo li  {
+		width: 100%;
+		max-width: 70px;
+		height: 70px;
+		margin-left: -30;
+	}
+	a {
+		font-size: 12px;
+	}
+	.issue_title {
+		font-size: 12px;
+	}
+	.ticket_uname {
+		font-size: 15px;
+	}
+	/*admin button only use on big screen size*/
+	#admin {
+		 visibility: hidden;
+	}
+	
+	.form {
+		width: 100%;
+		max-width: 300px;
+	}
+
 }
