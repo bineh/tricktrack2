@@ -97,7 +97,6 @@ function createIssue(){
 	xmlhttp.onreadystatechange = function(){
 		if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
 			var response = xmlhttp.responseText;
-			alert(response);
 			if(response !== "true"){
 				if (response === "-1") {
 					alert("Issue ist leer und kann nicht angelegt werden!");
@@ -229,7 +228,7 @@ function getIssuesByState(state){
 
 				//create tickets
 				for (var i = 0; i < result.length; i++){
-						
+
 					var li = document.createElement("li");
 					var outerdiv = document.createElement("div");
 					var spanid = document.createElement("span");
@@ -243,7 +242,7 @@ function getIssuesByState(state){
 					li.id = result[i]._id+"_li";
 					var span = document.createElement("span");
 					
-					li.setAttribute("class", result[i].priority);
+					li.setAttribute("class", result[i].priority);// + " draggable");
 					divtitle.setAttribute("class", "issue_title");
 						
 					span.setAttribute("class", "ticket_uname");
@@ -270,9 +269,18 @@ function getIssuesByState(state){
 					}
 					a.setAttribute('href', '#');
 					li.addEventListener('dragstart', function(e){
+
 						e.dataTransfer.effectAllowed = 'copy'; // only dropEffect='copy' will be dropable
 						e.dataTransfer.setData('Text', this.id); // required otherwise doesn't work
 					});
+					
+					/*li.addEventListener('touchmove', function(event) {
+					  var touch = event.targetTouches[0];
+					  // Place element where the finger is
+					  event.target.style.left = touch.pageX + 'px';
+					  event.target.style.top = touch.pageY + 'px';
+					  event.preventDefault();
+					}, false);*/
 				}
 				
 				document.getElementById("num_"+state).innerHTML = result.length;

@@ -7,29 +7,13 @@
 		<link  href="http://fonts.googleapis.com/css?family=Reenie+Beanie:regular" rel="stylesheet" type="text/css">
 	</head>
 <body>
+	<a href="../index.html"> <- Back to list</a><br>
 	<b>as an admin you can:</b><br>
 	
 	* <button type="button" id="dropissues">drop all issues</button><br>
 	* delete user -> get list of users here (checkbox?)<br>
 	* drop users
-	<table>
-  <thead>
-	  <tr>
-		  <th scope="col">Name</th>
-		  <th scope="col">Vorname</th>
-		  <th scope="col">Straße</th>
-      <th scope="col"><abbr title="Postleitzahl">PLZ</abbr></th>
-		  <th scope="col">Ort</th>
-	  </tr>
-  </thead>
-<tr>
-	<td data-label="Name">Shannon</td>
-	<td data-label="Vorname">Cheyenne</td>
-	<td data-label="Straße">Ap #239-2170 Phasellus Av.</td>
-	<td data-label="PLZ">94075</td>
-	<td data-label="Ort">Berlin</td>
-</tr>
-</table>	
+	
 	
 	<script>
 
@@ -55,11 +39,10 @@
 				xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
 				xmlhttp.send();
-				console.log("sdsdsd");
 				xmlhttp.onreadystatechange = function(){
 
 					if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-						if(xmlhttp.responseText === true){
+						if(xmlhttp.responseText == "true"){
 							alert("Issues dropped successfully");
 						} else {
 							alert("ERROR: Something went wrong while dropping issues!");

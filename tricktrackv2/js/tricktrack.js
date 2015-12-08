@@ -56,14 +56,20 @@ bin_done.addEventListener('drop', function (e) {
 	e.preventDefault();
 	
 	var el = document.getElementById(e.dataTransfer.getData('Text'));
+	var origin = el.parentNode.getAttribute("id").replace("_list", "");	
+	alert(origin);
 	el.parentNode.removeChild(el);
 	done_list.appendChild(el);
-
+	
+	
 	var issue_id = el.id.replace("_li","");
 	//save new state
 	saveIssueState(issue_id, "done");
-	updateItemsCount("done", "in_progress");
-	el.firstElementChild.firstElementChild.setAttribute("class", "line_through");
+	if (origin != "done") {
+		updateItemsCount("done", "in_progress");
+		el.firstElementChild.firstElementChild.setAttribute("class", "line_through");
+		el.setAttribute('draggable', 'false');
+	}
 	return false;
 });
 		  
@@ -78,13 +84,18 @@ bin_progress.addEventListener('drop', function (e) {
 	e.preventDefault();
 
 	var el = document.getElementById(e.dataTransfer.getData('Text'));
+	var origin = el.parentNode.getAttribute("id").replace("_list", "");
+	alert(origin);
 	el.parentNode.removeChild(el);	
 	in_progress_list.appendChild(el);
-			
+
+
 	var issue_id = el.id.replace("_li","");
 	//save new state
 	saveIssueState(issue_id, "in_progress");
-	updateItemsCount("in_progress", "todo");
+	if (origin != "in_progress") {
+		updateItemsCount("in_progress", "todo");
+	}
 	return false;
 });	
 
